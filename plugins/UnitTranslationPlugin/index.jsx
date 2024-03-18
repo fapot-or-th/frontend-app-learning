@@ -8,23 +8,24 @@ import { useModel } from '@src/generic/model-store';
 
 import TranslationSelection from './translation-selection';
 import FeedbackWidget from './feedback-widget';
-import useSelectLanguage from './translation-selection/useSelectLanguage';
+import getData from './api';
 
 const UnitTranslationPlugin = ({ id, courseId }) => {
   const [unitId, setUnitId] = useState('');
   const { authenticatedUser: { userId } } = React.useContext(AppContext);
-  const { language, wholeCourseTranslationEnabled } = useModel(
-    'courseHomeMeta',
+
+  const { language } = useModel(
+    'coursewareMeta',
     courseId,
   );
-  const { selectedLanguage, setSelectedLanguage } = useSelectLanguage({
-    courseId,
-    language,
+  const [translationConfig, setTranslationConfig] = useState({
+    enabled: false,
+    availableLanguages: [],
   });
 
-  if (!wholeCourseTranslationEnabled || !language) {
-    return null;
-  }
+  useEffect(() => {
+    getData().then(setTranslationConfig);
+  }, []);
 
   useEffect(() => {
     const { pathname } = window.location;
@@ -52,16 +53,19 @@ const UnitTranslationPlugin = ({ id, courseId }) => {
     userId,
   ]);
 
+  const { enabled, availableLanguages } = translationConfig;
+
+  if (!enabled || !language) {
+    return null;
+  }
+
   return (
-    <>
-      <TranslationSelection
-        id={id}
-        courseId={courseId}
-        language={language}
-        selectedLanguage={selectedLanguage}
-        setSelectedLanguage={setSelectedLanguage}
-      />
-    </>
+    <TranslationSelection
+      id={id}
+      courseId={courseId}
+      language={language}
+      availableLanguages={availableLanguages}
+    />
   );
 };
 

@@ -11,11 +11,15 @@ import TranslationModal from './TranslationModal';
 import useTranslationTour from './useTranslationTour';
 
 const TranslationSelection = ({
+<<<<<<< HEAD
   id,
   courseId,
   language,
   selectedLanguage,
   setSelectedLanguage,
+=======
+  id, courseId, language, availableLanguages,
+>>>>>>> 1365407 (chore: follow the contract)
 }) => {
   const dispatch = useDispatch();
   const {
@@ -63,6 +67,7 @@ const TranslationSelection = ({
         courseId={courseId}
         selectedLanguage={selectedLanguage}
         setSelectedLanguage={setSelectedLanguage}
+        availableLanguages={availableLanguages}
         id={id}
       />
     </>
@@ -73,8 +78,15 @@ TranslationSelection.propTypes = {
   id: PropTypes.string.isRequired,
   courseId: PropTypes.string.isRequired,
   language: PropTypes.string.isRequired,
+<<<<<<< HEAD
   selectedLanguage: PropTypes.string.isRequired,
   setSelectedLanguage: PropTypes.func.isRequired,
+=======
+  availableLanguages: PropTypes.arrayOf(PropTypes.shape({
+    code: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+  })).isRequired,
+>>>>>>> 1365407 (chore: follow the contract)
 };
 
 TranslationSelection.defaultProps = {};
