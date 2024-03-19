@@ -8,7 +8,7 @@ import { useModel } from '@src/generic/model-store';
 
 import TranslationSelection from './translation-selection';
 import FeedbackWidget from './feedback-widget';
-import getData from './api';
+import fetchTranslationConfig from './api';
 
 const UnitTranslationPlugin = ({ id, courseId }) => {
   const [unitId, setUnitId] = useState('');
@@ -24,7 +24,7 @@ const UnitTranslationPlugin = ({ id, courseId }) => {
   });
 
   useEffect(() => {
-    getData().then(setTranslationConfig);
+    fetchTranslationConfig(courseId).then(setTranslationConfig);
   }, []);
 
   useEffect(() => {
@@ -55,7 +55,7 @@ const UnitTranslationPlugin = ({ id, courseId }) => {
 
   const { enabled, availableLanguages } = translationConfig;
 
-  if (!enabled || !language) {
+  if (!enabled || !language || !availableLanguages.length) {
     return null;
   }
 
