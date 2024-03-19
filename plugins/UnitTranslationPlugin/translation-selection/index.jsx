@@ -9,22 +9,20 @@ import { registerOverrideMethod } from '@src/generic/plugin-store';
 import { stringifyUrl } from 'query-string';
 import TranslationModal from './TranslationModal';
 import useTranslationTour from './useTranslationTour';
+import useSelectLanguage from './useSelectLanguage';
 
 const TranslationSelection = ({
-<<<<<<< HEAD
-  id,
-  courseId,
-  language,
-  selectedLanguage,
-  setSelectedLanguage,
-=======
   id, courseId, language, availableLanguages,
->>>>>>> 1365407 (chore: follow the contract)
 }) => {
   const dispatch = useDispatch();
   const {
     translationTour, isOpen, open, close,
   } = useTranslationTour();
+
+  const { selectedLanguage, setSelectedLanguage } = useSelectLanguage({
+    courseId,
+    language,
+  });
 
   useEffect(() => {
     dispatch(
@@ -78,15 +76,10 @@ TranslationSelection.propTypes = {
   id: PropTypes.string.isRequired,
   courseId: PropTypes.string.isRequired,
   language: PropTypes.string.isRequired,
-<<<<<<< HEAD
-  selectedLanguage: PropTypes.string.isRequired,
-  setSelectedLanguage: PropTypes.func.isRequired,
-=======
   availableLanguages: PropTypes.arrayOf(PropTypes.shape({
     code: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
   })).isRequired,
->>>>>>> 1365407 (chore: follow the contract)
 };
 
 TranslationSelection.defaultProps = {};
