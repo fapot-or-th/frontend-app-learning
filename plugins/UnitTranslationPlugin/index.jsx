@@ -1,23 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { render } from 'react-dom';
 import PropTypes from 'prop-types';
 
-import { AppContext } from '@edx/frontend-platform/react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { useModel } from '@src/generic/model-store';
 
 import TranslationSelection from './translation-selection';
-import FeedbackWidget from './feedback-widget';
 import fetchTranslationConfig from './api';
 
-const UnitTranslationPlugin = ({ id, courseId }) => {
-  const [unitId, setUnitId] = useState('');
-  const { authenticatedUser: { userId } } = React.useContext(AppContext);
-
-  const { language } = useModel(
-    'coursewareMeta',
-    courseId,
-  );
+const UnitTranslationPlugin = ({ id, courseId, unitId }) => {
+  const { language } = useModel('coursewareMeta', courseId);
   const [translationConfig, setTranslationConfig] = useState({
     enabled: false,
     availableLanguages: [],
@@ -26,32 +16,6 @@ const UnitTranslationPlugin = ({ id, courseId }) => {
   useEffect(() => {
     fetchTranslationConfig(courseId).then(setTranslationConfig);
   }, []);
-
-  useEffect(() => {
-    const { pathname } = window.location;
-    const currentUnitId = pathname.substring(pathname.lastIndexOf('/') + 1);
-    setUnitId(currentUnitId);
-  }, [window.location.search]);
-
-  useEffect(() => {
-    const feedbackWidget = (
-      <IntlProvider locale="en">
-        <FeedbackWidget
-          courseId={courseId}
-          translationLanguage={selectedLanguage}
-          unitId={unitId}
-          userId={userId}
-        />
-      </IntlProvider>
-    );
-    const domNode = document.getElementById('whole-course-translation-feedback-widget');
-    render(feedbackWidget, domNode);
-  }, [
-    courseId,
-    selectedLanguage,
-    unitId,
-    userId,
-  ]);
 
   const { enabled, availableLanguages } = translationConfig;
 
@@ -65,6 +29,7 @@ const UnitTranslationPlugin = ({ id, courseId }) => {
       courseId={courseId}
       language={language}
       availableLanguages={availableLanguages}
+      unitId={unitId}
     />
   );
 };
@@ -72,6 +37,7 @@ const UnitTranslationPlugin = ({ id, courseId }) => {
 UnitTranslationPlugin.propTypes = {
   id: PropTypes.string.isRequired,
   courseId: PropTypes.string.isRequired,
+  unitId: PropTypes.string.isRequired,
 };
 
 export default UnitTranslationPlugin;

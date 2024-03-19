@@ -8,7 +8,16 @@ const fetchTranslationConfig = async (courseId) => {
     const { data } = await getAuthenticatedHttpClient().get(url);
     return {
       enabled: data.feature_enabled,
-      availableLanguages: data.available_translation_languages || [],
+      availableLanguages: data.available_translation_languages || [
+        {
+          code: 'en',
+          label: 'English',
+        },
+        {
+          code: 'es',
+          label: 'Spanish',
+        },
+      ],
     };
   } catch (error) {
     logError(`Translation plugin fail to fetch from ${url}`, error);

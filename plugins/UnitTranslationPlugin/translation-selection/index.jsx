@@ -1,5 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
+
+import { AppContext } from '@edx/frontend-platform/react';
 import { IconButton, Icon, ProductTour } from '@edx/paragon';
 import { Language } from '@edx/paragon/icons';
 import { useDispatch } from 'react-redux';
@@ -10,10 +12,14 @@ import { stringifyUrl } from 'query-string';
 import TranslationModal from './TranslationModal';
 import useTranslationTour from './useTranslationTour';
 import useSelectLanguage from './useSelectLanguage';
+import FeedbackWidget from '../feedback-widget';
 
 const TranslationSelection = ({
-  id, courseId, language, availableLanguages,
+  id, courseId, language, availableLanguages, unitId,
 }) => {
+  const {
+    authenticatedUser: { userId },
+  } = useContext(AppContext);
   const dispatch = useDispatch();
   const {
     translationTour, isOpen, open, close,
@@ -68,6 +74,12 @@ const TranslationSelection = ({
         availableLanguages={availableLanguages}
         id={id}
       />
+      <FeedbackWidget
+        courseId={courseId}
+        translationLanguage={selectedLanguage}
+        unitId={unitId}
+        userId={userId}
+      />
     </>
   );
 };
@@ -75,6 +87,7 @@ const TranslationSelection = ({
 TranslationSelection.propTypes = {
   id: PropTypes.string.isRequired,
   courseId: PropTypes.string.isRequired,
+  unitId: PropTypes.string.isRequired,
   language: PropTypes.string.isRequired,
   availableLanguages: PropTypes.arrayOf(PropTypes.shape({
     code: PropTypes.string.isRequired,

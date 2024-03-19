@@ -1,4 +1,6 @@
-import React, { useCallback } from 'react';
+import React, {
+  useCallback, useEffect, useRef, useState,
+} from 'react';
 import PropTypes from 'prop-types';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
@@ -16,6 +18,8 @@ const FeedbackWidget = ({
   userId,
 }) => {
   const { formatMessage } = useIntl();
+  const ref = useRef(null);
+  const [elemReady, setElemReady] = useState(false);
   const {
     closeFeedbackWidget,
     sendFeedback,
@@ -33,9 +37,18 @@ const FeedbackWidget = ({
   const onThumbsDownClick = useCallback(() => {
     sendFeedback(false);
   }, [sendFeedback]);
+
+  useEffect(() => {
+    if (ref.current) {
+      const domNode = document.getElementById('whole-course-translation-feedback-widget');
+      domNode.appendChild(ref.current);
+      setElemReady(true);
+    }
+  }, [ref.current]);
+
   return (
     (showFeedbackWidget || showGratitudeText) && (
-      <div className="sequence-container d-inline-flex flex-row">
+      <div ref={ref} className={elemReady ? 'sequence-container d-inline-flex flex-row' : 'd-none'}>
         <div className="sequence w-100">
           {
             showFeedbackWidget && (
