@@ -5,6 +5,29 @@
 
 @import "~@edx/frontend-component-footer/dist/footer";
 @import "~@edx/frontend-component-header/dist/index";
+@import url('https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@400;700&display=swap');
+
+@font-face {
+  font-family: 'DindanMai';
+  src: url('./fonts/DindanMai-Black.woff') format('woff');
+  font-weight: 900; /* Black */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'DindanMai';
+  src: url('./fonts/DindanMai-Bold.woff') format('woff');
+  font-weight: 700; /* Bold */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'DindanMai';
+  src: url('./fonts/DindanMai-Medium.woff') format('woff');
+  font-weight: 500; /* Medium */
+  font-style: normal;
+}
+
 
 
 #root {
@@ -32,16 +55,46 @@
       }
     }
   }
-
+  h1, h2{
+    font-family: 'DindanMai', sans-serif;
+  }
+  .h2{
+    font-family: 'DindanMai', sans-serif;
+  }
   footer {
     flex: 0;
+    visibility: hidden;
   }
+}
+
+
+.collapsible-card-lg .collapsible-trigger {
+  font-family: 'DindanMai', sans-serif;
+}
+
+li{
+  font-family: 'Bai Jamjuree', sans-serif;
+}
+
+.small, .x-small{
+  font-family: 'Bai Jamjuree', sans-serif;
+}
+.donut-chart-number{
+  font-family: 'DindanMai', sans-serif !important;
+}
+.donut-chart-label{
+  font-family: 'DindanMai', sans-serif !important; 
+}
+
+.popover-body{
+  font-family: 'Bai Jamjuree', sans-serif;
 }
 
 .nav-underline-tabs {
   margin: 0 0 -1px;
 
   .nav-link {
+    font-family: 'Bai Jamjuree', sans-serif;
     border-bottom: 4px solid transparent;
     border-top: 4px solid transparent;
     color: $gray-700;
@@ -61,8 +114,16 @@
   }
 }
 
+.list-unstyled{
+  font-family: 'Bai Jamjuree', sans-serif;
+}
+
 .pgn__menu-select .pgn__menu-select-popup {
   position: static;
+}
+
+.pgn__card-header{
+  font-family: 'DindanMai', sans-serif;
 }
 
 .sequence-container {
@@ -92,7 +153,16 @@
   }
 }
 
+.h4{
+  font-family: 'DindanMai', sans-serif;
+}
+
+.btn{
+  font-family: 'DindanMai', sans-serif;
+}
+
 .sequence-navigation {
+  font-family: 'Bai Jamjuree', sans-serif;
   display: flex;
   flex-grow: 1;
 
@@ -129,6 +199,8 @@
       z-index: 1;
     }
 
+
+
     &.active {
       &:after {
         content: "";
@@ -156,6 +228,7 @@
   }
 
   .sequence-navigation-tabs-container {
+
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: 100%;
@@ -267,6 +340,7 @@
 }
 
 .unit-container {
+  font-family: 'Bai Jamjuree', sans-serif;
   padding-top: 0;
   padding-bottom: 2rem;
   max-width: 1024px;
